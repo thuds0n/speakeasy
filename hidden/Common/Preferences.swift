@@ -1,11 +1,3 @@
-//
-//  Preferences.swift
-//  Hidden Bar
-//
-//  Created by phucld on 12/18/19.
-//  Copyright © 2019 Dwarves Foundation. All rights reserved.
-//
-
 import Foundation
 
 enum Preferences {
@@ -91,7 +83,7 @@ enum Preferences {
         
         set {
             UserDefaults.standard.set(newValue, forKey: UserDefaults.Key.alwaysHiddenSectionEnabled)
-            NotificationCenter.default.post(Notification(name: .alwayHideToggle))
+            NotificationCenter.default.post(Notification(name: .alwaysHideToggle))
         }
     }
     

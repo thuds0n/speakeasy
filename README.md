@@ -1,75 +1,68 @@
-<p align="center">
-	<img width="200" height="200" margin-right="100%" src="https://github.com/dwarvesf/hidden/blob/develop/img/icon_512%402x.png?raw=true">
-</p>
-<p align="center">
-	<a href="https://webuild.community">
-		<img src="https://raw.githubusercontent.com/webuild-community/badge/master/svg/love.svg" />
-	</a>
-	<a href="https://github.com/dwarvesf/hidden/releases/latest">
- 		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
-	</a>
-	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
- 		<img src="https://img.shields.io/badge/platform-macOS-lightgrey.svg" alt="platform">
-	</a>
-	<a href="https://img.shields.io/badge/requirements-macOS High Sierra+-ff69b4.svg">
- 		<img src="https://img.shields.io/badge/requirements-macOS High Sierra+-ff69b4.svg" alt="systemrequirements">
-	</a>
-</p>
+# Speakeasy
 
-## Hidden Bar
-Hidden Bar lets you hide menu bar items to give your Mac a cleaner look.
+A lightweight macOS utility that hides menu bar items — keeping your menu bar clean without giving anything up.
 
-<p align="center">
-	<img width="400" src="img/screen1.png">
-	<img width="400" src="img/screen2.png">
-</p>
+Built for Macs with a notch, or anyone who just has too many menu bar icons.
 
-## 🚀 Install
+---
 
-###  App Store
+## How it works
 
-[![AppStore](img/appstore.svg)](https://itunes.apple.com/app/hidden-bar/id1452453066)
-
-### Others
-
-The Hidden Bar is notarized before distributed out side App Store. It's safe to use 👍
-
-#### Using Homebrew
+Speakeasy inserts invisible separators into your menu bar that push items off to the left. A small chevron button lets you reveal or collapse them at any time.
 
 ```
-brew install --cask hiddenbar
+[ always-hidden ] | [ hidden items ] › [ visible items ]    wifi  9:41
 ```
 
-#### Manual download
+- **Shown** — always visible to the right of the collapse button
+- **Hidden** — collapse/expand with one click or a global shortcut
+- **Always Hidden** — permanently hidden; reveal with a right-click
 
-- [Download latest version](https://github.com/dwarvesf/hidden/releases/latest)
-- Open and drag the app to the Applications folder.
-- Launch Hidden and drag the icon in your menu bar (hold CMD) to the right so it is between some other icons.
-
-## 🕹 Usage
-
-* `⌘` + drag to move the Hidden icons around in the menu bar.
-* Click the Arrow icon to hide menu bar items.
-
-<p align="center">
-	<img src="img/tutorial.gif">
-</p>
-
-## ✨<a href="https://github.com/dwarvesf/hidden/graphs/contributors">Contributors</a>
-
-This project exists thanks to all the people who contribute. Thank you guys so much 👏
-
-[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/0)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/0)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/1)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/1)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/2)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/2)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/3)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/3)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/4)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/4)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/5)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/5)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/6)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/6)[![](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/images/7)](https://sourcerer.io/fame/phucledien/dwarvesf/hidden/links/7)
-
-Please read [this](CONTRIBUTING.md) before you make a contribution.
+---
 
 ## Requirements
-macOS version >= 10.13
 
-## You may also like
-- [Blurred](https://github.com/dwarvesf/Blurred) - A macOS utility that helps reduce distraction by dimming your inactive noise
-- [Micro Sniff](https://github.com/dwarvesf/micro-sniff) - An ultra-light macOS utility that notify whenever your micro-device is being used
-- [VimMotion](https://github.com/dwarvesf/VimMotionPublic) Vim style shortcut for MacOS
-## License
+macOS 13 Ventura or later · Apple Silicon or Intel
 
-MIT &copy; [Dwarves Foundation](https://github.com/dwarvesf)
+---
+
+## Installation
+
+Clone and build in Xcode:
+
+```
+git clone https://github.com/your-username/speakeasy.git
+cd speakeasy
+open "Hidden Bar.xcodeproj"
+```
+
+Build and run the **Hidden Bar** scheme. The app lives in your menu bar — no dock icon.
+
+---
+
+## Usage
+
+| Action | How |
+|--------|-----|
+| Collapse / expand hidden items | Click the **›** button in your menu bar |
+| Toggle via keyboard | Set a global shortcut in **Preferences → General** |
+| Move items between sections | Hold **⌘** and drag icons in the menu bar |
+| Hide an item permanently | ⌘-drag it to the left of the always-hidden separator |
+| Auto-collapse after a delay | Enable in **Preferences → Auto-Collapse** |
+
+---
+
+## Preferences
+
+Open with **›** right-click → Preferences, or via your configured global shortcut.
+
+- **Startup** — launch at login, show preferences on launch
+- **Menu Bar** — enable always-hidden section, use full menu bar when expanded
+- **Auto-Collapse** — automatically collapse after 5 s – 1 min of inactivity
+- **Global Shortcut** — set a system-wide keyboard shortcut to toggle hidden items
+
+---
+
+## Credits
+
+Speakeasy is a fork of [Hidden Bar](https://github.com/dwarvesf/hidden) by [Dwarves Foundation](https://github.com/dwarvesf), used under the MIT license.

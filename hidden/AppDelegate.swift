@@ -1,17 +1,7 @@
-//
-//  AppDelegate.swift
-//  vanillaClone
-//
-//  Created by Thanh Nguyen on 1/24/19.
-//  Copyright © 2019 Dwarves Foundation. All rights reserved.
-//
-
 import AppKit
 import HotKey
 
-@NSApplicationMain
-
-class AppDelegate: NSObject, NSApplicationDelegate{
+class AppDelegate: NSObject, NSApplicationDelegate {
     
     var statusBarController = StatusBarController()
     

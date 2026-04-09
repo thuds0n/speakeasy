@@ -1,13 +1,5 @@
-//
-//  EventMonitor.swift
-//  vanillaClone
-//
-//  Created by Thanh Nguyen on 1/28/19.
-//  Copyright © 2019 Thanh Nguyen. All rights reserved.
-//
-
-import Foundation
 import Cocoa
+
 public class EventMonitor {
     private var monitor: Any?
     private let mask: NSEvent.EventTypeMask
@@ -27,9 +19,9 @@ public class EventMonitor {
     }
     
     public func stop() {
-        if monitor != nil {
-            NSEvent.removeMonitor(monitor!)
-            monitor = nil
+        if let monitor = monitor {
+            NSEvent.removeMonitor(monitor)
+            self.monitor = nil
         }
     }
 }

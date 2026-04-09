@@ -1,11 +1,3 @@
-//
-//  GlobalKeybindingPreferences.swift
-//  Hidden Bar
-//
-//  Created by phucld on 12/18/19.
-//  Copyright © 2019 Dwarves Foundation. All rights reserved.
-//
-
 import Foundation
 
 struct GlobalKeybindPreferences: Codable, CustomStringConvertible {
@@ -20,7 +12,6 @@ struct GlobalKeybindPreferences: Codable, CustomStringConvertible {
     let keyCode : UInt32
 
     var description: String {
-        print(keyCode)
         var stringBuilder = ""
         if self.function {
             stringBuilder += "Fn"
@@ -63,8 +54,3 @@ struct GlobalKeybindPreferences: Codable, CustomStringConvertible {
     }
 }
 
-extension GlobalKeybindPreferences {
-    func save() {
-        
-    }
-}
