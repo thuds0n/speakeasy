@@ -34,12 +34,6 @@ struct AboutView: View {
 
             VStack(spacing: 0) {
                 AboutLink(
-                    icon: "chevron.left.forwardslash.chevron.right",
-                    label: "Source code on GitHub",
-                    url: "https://github.com/timhudson/speakeasy"
-                )
-                Divider().padding(.leading, 44)
-                AboutLink(
                     icon: "heart",
                     label: "Based on Hidden Bar by Dwarves Foundation",
                     url: "https://github.com/dwarvesf/hidden"
