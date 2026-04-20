@@ -6,9 +6,14 @@ extension UserDefaults {
         static let numberOfSecondForAutoHide = "numberOfSecondForAutoHide"
         static let isAutoStart = "isAutoStart"
         static let isAutoHide = "isAutoHide"
-        static let isShowPreference = "isShowPreferences"
+        static let isShowPreference = "isShowPreference"
         static let areSeparatorsHidden = "areSeparatorsHidden"
         static let alwaysHiddenSectionEnabled = "alwaysHiddenSectionEnabled"
         static let useFullStatusBarOnExpandEnabled = "useFullStatusBarOnExpandEnabled"
+
+        // Legacy keys retained for one-time migration on read.
+        enum Legacy {
+            static let isShowPreference = "isShowPreferences"
+        }
     }
 }

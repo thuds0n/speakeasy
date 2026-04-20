@@ -1,18 +1,8 @@
 import SwiftUI
 
 struct GeneralSettingsView: View {
-
-    // MARK: - State (mirrors Preferences, written back on change)
-
-    @State private var isAutoStart               = Preferences.isAutoStart
-    @State private var isShowPreference          = Preferences.isShowPreference
-    @State private var useFullStatusBar          = Preferences.useFullStatusBarOnExpandEnabled
-    @State private var alwaysHiddenEnabled       = Preferences.alwaysHiddenSectionEnabled
-    @State private var isAutoHide                = Preferences.isAutoHide
-    @State private var autoHideDuration          = Preferences.numberOfSecondForAutoHide
-    @State private var shortcut: GlobalKeybindPreferences? = Preferences.globalKey
-
-    @State private var showAlwaysHiddenHelp      = false
+    @ObservedObject var settings: SettingsStore
+    @State private var showAlwaysHiddenHelp = false
 
     // MARK: - Body
 
@@ -25,28 +15,24 @@ struct GeneralSettingsView: View {
         }
         .formStyle(.grouped)
         .frame(minWidth: 400, minHeight: 360)
-        .onAppear(perform: reloadFromPreferences)
     }
 
     // MARK: - Sections
 
     private var startupSection: some View {
         Section("Startup") {
-            Toggle("Launch Speakeasy at login", isOn: $isAutoStart)
-                .onChange(of: isAutoStart, perform: { Preferences.isAutoStart = $0 })
-            Toggle("Show preferences on launch", isOn: $isShowPreference)
-                .onChange(of: isShowPreference, perform: { Preferences.isShowPreference = $0 })
+            Toggle("Launch Speakeasy at login", isOn: $settings.isAutoStart)
+            Toggle("Show preferences on launch", isOn: $settings.isShowPreference)
         }
     }
 
     private var menuBarSection: some View {
         Section {
-            MenuBarDiagramView(alwaysHiddenEnabled: alwaysHiddenEnabled)
+            MenuBarDiagramView(alwaysHiddenEnabled: settings.alwaysHiddenSectionEnabled)
                 .listRowInsets(EdgeInsets())
                 .listRowBackground(Color.clear)
 
-            Toggle("Enable always hidden section", isOn: $alwaysHiddenEnabled)
-                .onChange(of: alwaysHiddenEnabled, perform: { Preferences.alwaysHiddenSectionEnabled = $0 })
+            Toggle("Enable always hidden section", isOn: $settings.alwaysHiddenSectionEnabled)
                 .overlay(alignment: .trailing) {
                     Button {
                         showAlwaysHiddenHelp = true
@@ -61,8 +47,7 @@ struct GeneralSettingsView: View {
                     .offset(x: -8)
                 }
 
-            Toggle("Use full menu bar when expanded", isOn: $useFullStatusBar)
-                .onChange(of: useFullStatusBar, perform: { Preferences.useFullStatusBarOnExpandEnabled = $0 })
+            Toggle("Use full menu bar when expanded", isOn: $settings.useFullStatusBarOnExpandEnabled)
         } header: {
             Text("Menu Bar")
         }
@@ -70,18 +55,16 @@ struct GeneralSettingsView: View {
 
     private var autoCollapseSection: some View {
         Section("Auto-Collapse") {
-            Toggle("Automatically collapse after a delay", isOn: $isAutoHide)
-                .onChange(of: isAutoHide, perform: { Preferences.isAutoHide = $0 })
+            Toggle("Automatically collapse after a delay", isOn: $settings.isAutoHide)
 
-            if isAutoHide {
-                Picker("Collapse after", selection: $autoHideDuration) {
+            if settings.isAutoHide {
+                Picker("Collapse after", selection: $settings.autoHideDuration) {
                     Text("5 seconds").tag(5.0)
                     Text("10 seconds").tag(10.0)
                     Text("15 seconds").tag(15.0)
                     Text("30 seconds").tag(30.0)
                     Text("1 minute").tag(60.0)
                 }
-                .onChange(of: autoHideDuration, perform: { Preferences.numberOfSecondForAutoHide = $0 })
             }
         }
     }
@@ -89,7 +72,7 @@ struct GeneralSettingsView: View {
     private var shortcutSection: some View {
         Section("Global Shortcut") {
             LabeledContent("Toggle hidden items") {
-                ShortcutRecorderView(shortcut: $shortcut)
+                ShortcutRecorderView(shortcut: $settings.globalKey)
                     .frame(width: 200, height: 28)
             }
         }
@@ -116,17 +99,5 @@ struct GeneralSettingsView: View {
         }
         .padding()
         .frame(width: 300)
-    }
-
-    // MARK: - Reload
-
-    private func reloadFromPreferences() {
-        isAutoStart         = Preferences.isAutoStart
-        isShowPreference    = Preferences.isShowPreference
-        useFullStatusBar    = Preferences.useFullStatusBarOnExpandEnabled
-        alwaysHiddenEnabled = Preferences.alwaysHiddenSectionEnabled
-        isAutoHide          = Preferences.isAutoHide
-        autoHideDuration    = Preferences.numberOfSecondForAutoHide
-        shortcut            = Preferences.globalKey
     }
 }

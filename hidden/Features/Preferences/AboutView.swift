@@ -53,24 +53,30 @@ private struct AboutLink: View {
     let url: String
 
     var body: some View {
-        Link(destination: URL(string: url)!) {
-            HStack(spacing: 10) {
-                Image(systemName: icon)
-                    .frame(width: 20)
-                    .foregroundStyle(.secondary)
-                Text(label)
-                    .foregroundStyle(.primary)
-                Spacer()
-                Image(systemName: "arrow.up.right")
-                    .font(.caption)
-                    .foregroundStyle(.tertiary)
+        if let destination = URL(string: url) {
+            Link(destination: destination) {
+                content
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .contentShape(Rectangle())
+            .buttonStyle(.plain)
+            .hoverHighlight()
         }
-        .buttonStyle(.plain)
-        .hoverHighlight()
+    }
+
+    private var content: some View {
+        HStack(spacing: 10) {
+            Image(systemName: icon)
+                .frame(width: 20)
+                .foregroundStyle(.secondary)
+            Text(label)
+                .foregroundStyle(.primary)
+            Spacer()
+            Image(systemName: "arrow.up.right")
+                .font(.caption)
+                .foregroundStyle(.tertiary)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 10)
+        .contentShape(Rectangle())
     }
 }
 

@@ -1,6 +1,6 @@
 import Foundation
 
-struct GlobalKeybindPreferences: Codable, CustomStringConvertible {
+struct GlobalKeybindPreferences: Codable, CustomStringConvertible, Equatable {
     let function : Bool
     let control : Bool
     let command : Bool
@@ -49,8 +49,7 @@ struct GlobalKeybindPreferences: Codable, CustomStringConvertible {
         if let characters = self.characters {
             stringBuilder += characters.uppercased()
         }
-        
+
         return "\(stringBuilder)"
     }
 }
-

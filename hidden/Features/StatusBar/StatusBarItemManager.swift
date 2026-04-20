@@ -1,14 +1,23 @@
 import AppKit
 
+@MainActor
 final class StatusBarItemManager {
 
     // MARK: - Constants
 
+    /// All values are in points — the unit `NSStatusItem.length` uses.
+    /// "Collapsed" means the separator item is stretched wide enough to push the icons left of
+    /// it off-screen; its length is sized to cover the entire menu bar width on the current
+    /// screen (`collapsedMin…collapsedMax`, plus a `collapsedPad` safety margin).
     private enum Lengths {
         static let visible: CGFloat = 20
         static let initial: CGFloat = 1
         static let collapsedMin: CGFloat = 500
+        /// Hard ceiling so `separator.length` never grows unbounded across display changes
+        /// (observed memory growth previously; see commit a971149).
         static let collapsedMax: CGFloat = 4000
+        /// Safety margin added to screen width so the separator fully covers icons even when
+        /// the reported width underestimates the visible frame (e.g. notch-aware displays).
         static let collapsedPad: CGFloat = 200
     }
 
@@ -24,7 +33,7 @@ final class StatusBarItemManager {
     private(set) var collapseLength: CGFloat = Lengths.collapsedMax
 
     var isCollapsed: Bool {
-        separator.length == collapseLength
+        separator.length > Lengths.visible
     }
 
     // MARK: - Init
@@ -55,8 +64,8 @@ final class StatusBarItemManager {
         alwaysHidden?.length = Lengths.visible
     }
 
-    func hideSeparator() {
-        guard isAlwaysHiddenInValidPosition else { return }
+    func hideSeparator(alwaysHiddenEnabled: Bool) {
+        guard isAlwaysHiddenInValidPosition(alwaysHiddenEnabled: alwaysHiddenEnabled) else { return }
         if !isCollapsed { separator.length = Lengths.visible }
         alwaysHidden?.length = collapseLength
     }
@@ -86,26 +95,40 @@ final class StatusBarItemManager {
     // MARK: - Screen adaptation
 
     func refreshCollapseLength() {
+        let wasCollapsed = isCollapsed
+        let wasAlwaysHiddenHidden = (alwaysHidden?.length ?? 0) > Lengths.visible
         let screenWidth = NSScreen.main?.visibleFrame.width ?? 1728
         collapseLength = max(Lengths.collapsedMin, min(screenWidth + Lengths.collapsedPad, Lengths.collapsedMax))
+
+        if wasCollapsed {
+            separator.length = collapseLength
+        }
+
+        if wasAlwaysHiddenHidden {
+            alwaysHidden?.length = collapseLength
+        }
     }
 
     // MARK: - Position validation
 
     var isSeparatorInValidPosition: Bool {
         guard
-            let toggleX   = expandCollapse.button?.windowOrigin?.x,
-            let separateX = separator.button?.windowOrigin?.x
+            let toggleX = expandCollapse.button?.window?.frame.origin.x,
+            let separateX = separator.button?.window?.frame.origin.x
         else { return false }
-        return Constant.isUsingLTRLanguage ? toggleX >= separateX : toggleX <= separateX
+        return isLeftToRight ? toggleX >= separateX : toggleX <= separateX
     }
 
-    private var isAlwaysHiddenInValidPosition: Bool {
-        guard Preferences.alwaysHiddenSectionEnabled else { return true }
+    private func isAlwaysHiddenInValidPosition(alwaysHiddenEnabled: Bool) -> Bool {
+        guard alwaysHiddenEnabled else { return true }
         guard
-            let separateX     = separator.button?.windowOrigin?.x,
-            let alwaysHiddenX = alwaysHidden?.button?.windowOrigin?.x
+            let separateX = separator.button?.window?.frame.origin.x,
+            let alwaysHiddenX = alwaysHidden?.button?.window?.frame.origin.x
         else { return false }
-        return Constant.isUsingLTRLanguage ? separateX >= alwaysHiddenX : separateX <= alwaysHiddenX
+        return isLeftToRight ? separateX >= alwaysHiddenX : separateX <= alwaysHiddenX
+    }
+
+    private var isLeftToRight: Bool {
+        NSApplication.shared.userInterfaceLayoutDirection == .leftToRight
     }
 }

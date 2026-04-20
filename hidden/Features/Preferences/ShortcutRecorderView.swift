@@ -1,12 +1,14 @@
 import SwiftUI
-import HotKey
 import Carbon
 
 /// A button that captures the next key press as a global shortcut.
 struct ShortcutRecorderView: NSViewRepresentable {
     @Binding var shortcut: GlobalKeybindPreferences?
+    var onShortcutChange: ((GlobalKeybindPreferences?) -> Void)?
 
-    func makeCoordinator() -> Coordinator { Coordinator(shortcut: $shortcut) }
+    func makeCoordinator() -> Coordinator {
+        Coordinator(shortcut: $shortcut, onShortcutChange: onShortcutChange)
+    }
 
     func makeNSView(context: Context) -> ShortcutRecorderButton {
         let view = ShortcutRecorderButton()
@@ -28,26 +30,21 @@ struct ShortcutRecorderView: NSViewRepresentable {
 
     final class Coordinator {
         private var shortcut: Binding<GlobalKeybindPreferences?>
+        private let onShortcutChange: ((GlobalKeybindPreferences?) -> Void)?
 
-        init(shortcut: Binding<GlobalKeybindPreferences?>) {
+        init(shortcut: Binding<GlobalKeybindPreferences?>, onShortcutChange: ((GlobalKeybindPreferences?) -> Void)?) {
             self.shortcut = shortcut
+            self.onShortcutChange = onShortcutChange
         }
 
         func apply(_ captured: GlobalKeybindPreferences) {
             shortcut.wrappedValue = captured
-            Preferences.globalKey = captured
-            guard let appDelegate = NSApp.delegate as? AppDelegate else { return }
-            appDelegate.hotKey = HotKey(keyCombo: KeyCombo(
-                carbonKeyCode: captured.keyCode,
-                carbonModifiers: captured.carbonFlags
-            ))
+            onShortcutChange?(captured)
         }
 
         func clear() {
             shortcut.wrappedValue = nil
-            Preferences.globalKey = nil
-            guard let appDelegate = NSApp.delegate as? AppDelegate else { return }
-            appDelegate.hotKey = nil
+            onShortcutChange?(nil)
         }
     }
 }
@@ -146,16 +143,10 @@ final class ShortcutRecorderButton: NSView {
         if event.keyCode == UInt16(kVK_Escape) { isListening = false; return }
         guard let chars = event.charactersIgnoringModifiers, !chars.isEmpty else { return }
 
-        let captured = GlobalKeybindPreferences(
-            function: event.modifierFlags.contains(.function),
-            control:  event.modifierFlags.contains(.control),
-            command:  event.modifierFlags.contains(.command),
-            shift:    event.modifierFlags.contains(.shift),
-            option:   event.modifierFlags.contains(.option),
-            capsLock: event.modifierFlags.contains(.capsLock),
-            carbonFlags: event.modifierFlags.carbonFlags,
+        let captured = GlobalKeybindPreferences.from(
+            event: event,
             characters: chars,
-            keyCode: UInt32(event.keyCode)
+            carbonFlags: event.modifierFlags.carbonFlags
         )
 
         currentShortcut = captured
@@ -167,17 +158,7 @@ final class ShortcutRecorderButton: NSView {
         guard isListening else { return }
         // Show modifier preview while waiting for the key character
         if !event.modifierFlags.intersection([.command, .control, .option, .shift]).isEmpty {
-            let preview = GlobalKeybindPreferences(
-                function: event.modifierFlags.contains(.function),
-                control:  event.modifierFlags.contains(.control),
-                command:  event.modifierFlags.contains(.command),
-                shift:    event.modifierFlags.contains(.shift),
-                option:   event.modifierFlags.contains(.option),
-                capsLock: event.modifierFlags.contains(.capsLock),
-                carbonFlags: 0,
-                characters: nil,
-                keyCode: UInt32(event.keyCode)
-            )
+            let preview = GlobalKeybindPreferences.from(event: event, characters: nil, carbonFlags: 0)
             setButton.title = preview.description.isEmpty ? "Type shortcut…" : "\(preview.description)…"
         } else {
             setButton.title = "Type shortcut…"
