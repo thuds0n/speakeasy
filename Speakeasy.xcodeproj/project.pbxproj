@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		00117C4426600671005E517C /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00117C4326600671005E517C /* Assets.swift */; };
-		0842CDFB23A9FDD000D14BD4 /* GlobalKeybindingPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0842CDFA23A9FDD000D14BD4 /* GlobalKeybindingPreferences.swift */; };
+		0842CDFB23A9FDD000D14BD4 /* GlobalKeybindPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0842CDFA23A9FDD000D14BD4 /* GlobalKeybindPreferences.swift */; };
 		08A5F85C23AA013100981CA5 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5F85B23AA013100981CA5 /* SettingsStore.swift */; };
 		08A5F85F23AA01EE00981CA5 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 08A5F85E23AA01EE00981CA5 /* HotKey */; };
 		08A5F86123AA085B00981CA5 /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5F86023AA085B00981CA5 /* LaunchAtLoginService.swift */; };
-		08A5F86423AA09F300981CA5 /* UserDefault+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5F86323AA09F300981CA5 /* UserDefault+Extension.swift */; };
+		08A5F86423AA09F300981CA5 /* UserDefaults+Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A5F86323AA09F300981CA5 /* UserDefaults+Keys.swift */; };
 		08C20FE023AB44E60035D978 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C20FDF23AB44E60035D978 /* Bundle+Extension.swift */; };
 		BB00000100000001 /* SpeakeasyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001100000001 /* SpeakeasyApp.swift */; };
 		BB00000100000002 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001100000002 /* PreferencesView.swift */; };
@@ -51,16 +51,16 @@
 
 /* Begin PBXFileReference section */
 		00117C4326600671005E517C /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
-		0842CDFA23A9FDD000D14BD4 /* GlobalKeybindingPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindingPreferences.swift; sourceTree = "<group>"; };
+		0842CDFA23A9FDD000D14BD4 /* GlobalKeybindPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferences.swift; sourceTree = "<group>"; };
 		08A5F85B23AA013100981CA5 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStore.swift; sourceTree = "<group>"; };
 		08A5F86023AA085B00981CA5 /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
-		08A5F86323AA09F300981CA5 /* UserDefault+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault+Extension.swift"; sourceTree = "<group>"; };
+		08A5F86323AA09F300981CA5 /* UserDefaults+Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Keys.swift"; sourceTree = "<group>"; };
 		08C20FDF23AB44E60035D978 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		55188DF9279A737900A92772 /* hr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hr; path = hr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55D9B6B72660F153007AF073 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55D9B6BA2661DEDA007AF073 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55D9B6BD2661DEE8007AF073 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9220587D22127050008A8B03 /* Speakeasy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Speakeasy.entitlements; path = hidden/Speakeasy.entitlements; sourceTree = "<group>"; };
+		9220587D22127050008A8B03 /* Speakeasy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Speakeasy.entitlements; path = Speakeasy/Speakeasy.entitlements; sourceTree = "<group>"; };
 		929113F121F9D04100173149 /* Speakeasy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Speakeasy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		929113F421F9D04100173149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		929113F821F9D04200173149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,7 +113,7 @@
 		0842CDF923A9FDB900D14BD4 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				0842CDFA23A9FDD000D14BD4 /* GlobalKeybindingPreferences.swift */,
+				0842CDFA23A9FDD000D14BD4 /* GlobalKeybindPreferences.swift */,
 				08A5F85B23AA013100981CA5 /* SettingsStore.swift */,
 			);
 			path = Settings;
@@ -153,7 +153,7 @@
 		08A5F86223AA09D900981CA5 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				08A5F86323AA09F300981CA5 /* UserDefault+Extension.swift */,
+				08A5F86323AA09F300981CA5 /* UserDefaults+Keys.swift */,
 				08C20FDF23AB44E60035D978 /* Bundle+Extension.swift */,
 				967F4B2424169BC800F18D3C /* String+Extension.swift */,
 				BB00001100000010 /* NSApplication+Settings.swift */,
@@ -221,7 +221,7 @@
 				967F4B2A24169CAF00F18D3C /* Localizable.strings */,
 			);
 			name = Speakeasy;
-			path = hidden;
+			path = Speakeasy;
 			sourceTree = "<group>";
 		};
 		92C97B89220049B30007559C /* Application */ = {
@@ -380,8 +380,8 @@
 				92C97B88220032ED0007559C /* HotKeyService.swift in Sources */,
 				967F4B2524169BC800F18D3C /* String+Extension.swift in Sources */,
 				00117C4426600671005E517C /* Assets.swift in Sources */,
-				0842CDFB23A9FDD000D14BD4 /* GlobalKeybindingPreferences.swift in Sources */,
-				08A5F86423AA09F300981CA5 /* UserDefault+Extension.swift in Sources */,
+				0842CDFB23A9FDD000D14BD4 /* GlobalKeybindPreferences.swift in Sources */,
+				08A5F86423AA09F300981CA5 /* UserDefaults+Keys.swift in Sources */,
 				BB00000100000010 /* NSApplication+Settings.swift in Sources */,
 				BB00000100000011 /* GlobalKeybindPreferences+NSEvent.swift in Sources */,
 			);
@@ -549,13 +549,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = hidden/Speakeasy.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Speakeasy/Speakeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = hidden/Info.plist;
+				INFOPLIST_FILE = Speakeasy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -573,13 +573,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = hidden/Speakeasy.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Speakeasy/Speakeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 13;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = hidden/Info.plist;
+				INFOPLIST_FILE = Speakeasy/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

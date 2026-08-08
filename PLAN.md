@@ -38,10 +38,18 @@ set -o pipefail && xcodebuild -project "Speakeasy.xcodeproj" -scheme "Speakeasy"
 ## Phase 4 — Complete Xcode rebrand  ✅ completed 2026-08-08
 
 - Renamed the Xcode project, application target, shared scheme, app product, and Swift module to `Speakeasy`.
-- Renamed and corrected the application entitlement path to `hidden/Speakeasy.entitlements`.
+- Renamed and corrected the application entitlement filename and project reference.
 - Removed the obsolete launcher scheme, unreferenced storyboard localisation files, and dangling framework references.
 - Updated test imports and developer build instructions for the renamed module and scheme.
 - Verified all 19 tests pass and the unsigned arm64 Debug build produces `Speakeasy.app`.
+
+## Phase 5 — Align the physical source layout  ✅ completed 2026-08-08
+
+- Renamed the application source root from the legacy `hidden/` path to `Speakeasy/`.
+- Aligned `GlobalKeybindPreferences.swift` with its type name and renamed the defaults key file to `UserDefaults+Keys.swift`.
+- Updated Xcode file references, build settings, entitlement and Info.plist paths, and the codebase map.
+- Removed the unreferenced root `img/` folder; its icon was already duplicated in the active app icon asset catalogue.
+- Verified all 19 tests pass and the unsigned arm64 Debug build succeeds with the new paths.
 
 ## Backlog
 

@@ -5,7 +5,7 @@ A map of the repository. Start here before editing unfamiliar areas. For in-flig
 ## Layout
 
 ```
-hidden/
+Speakeasy/
 ├── Application/              — App entry point + AppDelegate
 │   ├── SpeakeasyApp.swift        SwiftUI @main, declares the Settings scene
 │   └── AppDelegate.swift         Owns SettingsStore, coordinator, and services
@@ -13,7 +13,7 @@ hidden/
 ├── Core/                     — Framework-agnostic logic (no AppKit in Core/Settings)
 │   ├── Settings/
 │   │   ├── SettingsStore.swift               @Published state + UserDefaults persistence
-│   │   └── GlobalKeybindingPreferences.swift Codable shortcut model
+│   │   └── GlobalKeybindPreferences.swift    Codable shortcut model
 │   └── Services/
 │       ├── ApplicationActivationService.swift  Switches between menu-extra-only and full-menu-bar modes
 │       ├── HotKeyService.swift               Wraps soffes/HotKey. Exposes HotKeyServicing protocol
@@ -36,7 +36,7 @@ hidden/
     └── Extensions/
         ├── Bundle+Extension.swift            releaseVersionNumber / buildVersionNumber
         ├── String+Extension.swift            .localized helper
-        ├── UserDefault+Extension.swift       Type-safe UserDefaults.Key enum (+ Legacy)
+        ├── UserDefaults+Keys.swift           Type-safe UserDefaults.Key enum (+ Legacy)
         ├── NSApplication+Settings.swift      openSettingsWindow() — centralises private selector
         └── GlobalKeybindPreferences+NSEvent.swift  Factory from NSEvent (kept out of Core)
 ```
@@ -53,6 +53,7 @@ SpeakeasyApp (@main, SwiftUI App)
        ├─ SettingsStore                 (state + UserDefaults)
        ├─ HotKeyService : HotKeyServicing
        ├─ LaunchAtLoginService : LaunchAtLoginControlling
+       ├─ ApplicationActivationService : ApplicationActivationControlling
        └─ StatusBarCoordinator          (binds to SettingsStore via Combine)
             ├─ StatusBarItemManager    (NSStatusBar items)
             └─ AutoCollapseTimer
@@ -64,8 +65,8 @@ SpeakeasyApp (@main, SwiftUI App)
 
 | Need | File(s) to touch |
 |------|------------------|
-| A new persisted setting | `SettingsStore` (property + default + `persist(_:to:)` call) and `UserDefaults+Extension.swift` (key). Bind from `StatusBarCoordinator` if it affects the menu bar. |
-| A new preference pane | New SwiftUI view in `hidden/Features/Preferences/`, wire into `PreferencesView`'s `TabView`. |
+| A new persisted setting | `SettingsStore` (property + default + `persist(_:to:)` call) and `UserDefaults+Keys.swift` (key). Bind from `StatusBarCoordinator` if it affects the menu bar. |
+| A new preference pane | New SwiftUI view in `Speakeasy/Features/Preferences/`, wire into `PreferencesView`'s `TabView`. |
 | A new status-bar behaviour | `StatusBarCoordinator` (orchestration) and/or `StatusBarItemManager` (NSStatusItem mechanics). Keep AppKit plumbing in the manager; keep settings/state reactions in the coordinator. |
 | A new service (external system integration) | New file under `Core/Services/` behind a protocol; inject into `AppDelegate`. Mirror `LaunchAtLoginControlling` / `HotKeyServicing`. |
 | A utility used by multiple features | `Shared/` — extension files under `Shared/Extensions/`, other helpers at the top level. Do not introduce AppKit imports into `Core/`. |
