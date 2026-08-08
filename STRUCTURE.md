@@ -17,7 +17,7 @@ Speakeasy/
 │   └── Services/
 │       ├── ApplicationActivationService.swift  Switches between menu-extra-only and full-menu-bar modes
 │       ├── HotKeyService.swift               Wraps soffes/HotKey. Exposes HotKeyServicing protocol
-│       └── LaunchAtLoginService.swift        Wraps SMAppService. Exposes LaunchAtLoginControlling protocol
+│       └── LaunchAtLoginService.swift        SMAppService adapter + observable status/error controller
 │
 ├── Features/                 — User-facing feature modules
 │   ├── Preferences/              SwiftUI settings pane
@@ -52,7 +52,8 @@ SpeakeasyApp (@main, SwiftUI App)
   └─ NSApplicationDelegateAdaptor → AppDelegate
        ├─ SettingsStore                 (state + UserDefaults)
        ├─ HotKeyService : HotKeyServicing
-       ├─ LaunchAtLoginService : LaunchAtLoginControlling
+       ├─ LaunchAtLoginController       (authoritative macOS status + visible errors)
+       │    └─ LaunchAtLoginService : LaunchAtLoginControlling
        ├─ ApplicationActivationService : ApplicationActivationControlling
        └─ StatusBarCoordinator          (binds to SettingsStore via Combine)
             ├─ StatusBarItemManager    (NSStatusBar items)
@@ -75,5 +76,5 @@ SpeakeasyApp (@main, SwiftUI App)
 
 - **`Core/Settings` must not import AppKit or SwiftUI.** If you need an NSEvent/NSColor helper on a Core type, put it in `Shared/Extensions/` (see `GlobalKeybindPreferences+NSEvent.swift`).
 - **`@MainActor` everything that touches `NSStatusBar`, `NSApplication`, or SwiftUI state.** The coordinator and its collaborators are already `@MainActor`; keep it that way.
-- **Services are protocol-based.** `ApplicationActivationControlling`, `HotKeyServicing`, `LaunchAtLoginControlling`. Add a protocol before adding a new service.
+- **Services are protocol-based.** `ApplicationActivationControlling`, `HotKeyServicing`, `LaunchAtLoginControlling`. Add a protocol before adding a new service. System-owned state, such as login-item approval, must be reconciled from the service rather than treated as a persisted preference.
 - **Keep the Settings scene free of business logic.** All reactions to state changes live in `StatusBarCoordinator.bindSettings()`.

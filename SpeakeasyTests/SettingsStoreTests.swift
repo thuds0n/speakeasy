@@ -23,7 +23,6 @@ final class SettingsStoreTests: XCTestCase {
     func testDefaultValuesAreRegisteredOnFirstLaunch() {
         let store = makeStore()
 
-        XCTAssertFalse(store.isAutoStart)
         XCTAssertTrue(store.isShowPreference)
         XCTAssertTrue(store.isAutoHide)
         XCTAssertEqual(store.autoHideDuration, 10.0)
@@ -48,12 +47,10 @@ final class SettingsStoreTests: XCTestCase {
     func testRelaunchRestoresPreviouslyPersistedValues() {
         do {
             let store = makeStore()
-            store.isAutoStart = true
             store.autoHideDuration = 60
         }
 
         let relaunch = makeStore()
-        XCTAssertTrue(relaunch.isAutoStart)
         XCTAssertEqual(relaunch.autoHideDuration, 60)
     }
 

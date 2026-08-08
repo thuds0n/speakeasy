@@ -2,6 +2,7 @@ import SwiftUI
 
 struct GeneralSettingsView: View {
     @ObservedObject var settings: SettingsStore
+    @ObservedObject var launchAtLogin: LaunchAtLoginController
     @State private var showAlwaysHiddenHelp = false
 
     // MARK: - Body
@@ -14,16 +15,26 @@ struct GeneralSettingsView: View {
             shortcutSection
         }
         .formStyle(.grouped)
-        .frame(minWidth: 400, minHeight: 360)
+        .frame(minWidth: 400, minHeight: 390)
+        .onAppear(perform: launchAtLogin.refresh)
     }
 
     // MARK: - Sections
 
     private var startupSection: some View {
         Section("Startup") {
-            Toggle("Launch Speakeasy at login", isOn: $settings.isAutoStart)
+            Toggle("Launch Speakeasy at login", isOn: launchAtLoginBinding)
+                .disabled(launchAtLogin.status == .unavailable)
+            LaunchAtLoginStatusView(controller: launchAtLogin)
             Toggle("Show preferences on launch", isOn: $settings.isShowPreference)
         }
+    }
+
+    private var launchAtLoginBinding: Binding<Bool> {
+        Binding(
+            get: { launchAtLogin.isEnabled },
+            set: launchAtLogin.setEnabled
+        )
     }
 
     private var menuBarSection: some View {
@@ -99,5 +110,70 @@ struct GeneralSettingsView: View {
         }
         .padding()
         .frame(width: 300)
+    }
+}
+
+private struct LaunchAtLoginStatusView: View {
+    @ObservedObject var controller: LaunchAtLoginController
+
+    var body: some View {
+        Label(statusText, systemImage: statusIcon)
+            .font(.caption)
+            .foregroundStyle(statusColor)
+            .accessibilityElement(children: .combine)
+
+        if controller.status == .requiresApproval {
+            Button("Open Login Items Settings", action: controller.openSystemSettings)
+                .controlSize(.small)
+                .help("Open macOS System Settings to approve Speakeasy as a login item.")
+                .accessibilityHint("Opens the Login Items section in System Settings.")
+        }
+
+        if let errorMessage = controller.errorMessage {
+            Label(errorMessage, systemImage: "xmark.octagon.fill")
+                .font(.caption)
+                .foregroundStyle(.red)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityElement(children: .combine)
+        }
+    }
+
+    private var statusText: String {
+        switch controller.status {
+        case .disabled:
+            return "Not configured to launch at login"
+        case .enabled:
+            return "Enabled in macOS Login Items"
+        case .requiresApproval:
+            return "Approval required in macOS System Settings"
+        case .unavailable:
+            return "Login item status is unavailable"
+        }
+    }
+
+    private var statusIcon: String {
+        switch controller.status {
+        case .disabled:
+            return "minus.circle"
+        case .enabled:
+            return "checkmark.circle.fill"
+        case .requiresApproval:
+            return "exclamationmark.triangle.fill"
+        case .unavailable:
+            return "xmark.circle.fill"
+        }
+    }
+
+    private var statusColor: Color {
+        switch controller.status {
+        case .disabled:
+            return .secondary
+        case .enabled:
+            return .green
+        case .requiresApproval:
+            return .orange
+        case .unavailable:
+            return .red
+        }
     }
 }

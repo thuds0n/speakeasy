@@ -4,7 +4,6 @@ import Foundation
 @MainActor
 final class SettingsStore: ObservableObject {
     @Published var globalKey: GlobalKeybindPreferences?
-    @Published var isAutoStart: Bool
     @Published var isShowPreference: Bool
     @Published var isAutoHide: Bool
     @Published var autoHideDuration: Double
@@ -24,7 +23,6 @@ final class SettingsStore: ObservableObject {
         Self.migrateLegacyKeys(in: userDefaults, persistentDomainName: persistentDomainName)
 
         userDefaults.register(defaults: [
-            UserDefaults.Key.isAutoStart: false,
             UserDefaults.Key.isShowPreference: true,
             UserDefaults.Key.isAutoHide: true,
             UserDefaults.Key.numberOfSecondForAutoHide: 10.0,
@@ -34,7 +32,6 @@ final class SettingsStore: ObservableObject {
         ])
 
         globalKey = Self.decodeGlobalKey(from: userDefaults)
-        isAutoStart = userDefaults.bool(forKey: UserDefaults.Key.isAutoStart)
         isShowPreference = userDefaults.bool(forKey: UserDefaults.Key.isShowPreference)
         isAutoHide = userDefaults.bool(forKey: UserDefaults.Key.isAutoHide)
         autoHideDuration = userDefaults.double(forKey: UserDefaults.Key.numberOfSecondForAutoHide)
@@ -67,7 +64,6 @@ final class SettingsStore: ObservableObject {
             .sink { [weak self] in self?.persistGlobalKey($0) }
             .store(in: &cancellables)
 
-        persist($isAutoStart, to: UserDefaults.Key.isAutoStart)
         persist($isShowPreference, to: UserDefaults.Key.isShowPreference)
         persist($isAutoHide, to: UserDefaults.Key.isAutoHide)
         persist($autoHideDuration, to: UserDefaults.Key.numberOfSecondForAutoHide)

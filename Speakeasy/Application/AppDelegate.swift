@@ -4,9 +4,9 @@ import Combine
 @MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
     let settings = SettingsStore()
+    let launchAtLoginController = LaunchAtLoginController(service: LaunchAtLoginService())
 
     private let hotKeyService: HotKeyServicing = HotKeyService()
-    private let launchAtLoginService: LaunchAtLoginControlling = LaunchAtLoginService()
     private let applicationActivationService: ApplicationActivationControlling = ApplicationActivationService()
     private let autoCollapseTimer: AutoCollapseTiming = AutoCollapseTimer()
     private var statusBarCoordinator: StatusBarCoordinator?
@@ -22,21 +22,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.statusBarCoordinator?.expandCollapseIfNeeded()
         }
 
-        bindRuntimeServices()
+        bindHotKey()
         openPreferencesIfNeeded()
     }
 
-    private func bindRuntimeServices() {
+    func applicationDidBecomeActive(_ notification: Notification) {
+        launchAtLoginController.refresh()
+    }
+
+    private func bindHotKey() {
         settings.$globalKey
             .sink { [hotKeyService] shortcut in
                 hotKeyService.updateShortcut(shortcut)
-            }
-            .store(in: &cancellables)
-
-        settings.$isAutoStart
-            .removeDuplicates()
-            .sink { [launchAtLoginService] isEnabled in
-                launchAtLoginService.setEnabled(isEnabled)
             }
             .store(in: &cancellables)
     }

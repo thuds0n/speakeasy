@@ -2,10 +2,11 @@ import SwiftUI
 
 struct PreferencesView: View {
     @ObservedObject var settings: SettingsStore
+    @ObservedObject var launchAtLogin: LaunchAtLoginController
 
     var body: some View {
         TabView {
-            GeneralSettingsView(settings: settings)
+            GeneralSettingsView(settings: settings, launchAtLogin: launchAtLogin)
                 .tabItem { Label("General", systemImage: "gearshape") }
 
             AboutView()

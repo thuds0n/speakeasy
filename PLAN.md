@@ -51,6 +51,14 @@ set -o pipefail && xcodebuild -project "Speakeasy.xcodeproj" -scheme "Speakeasy"
 - Removed the unreferenced root `img/` folder; its icon was already duplicated in the active app icon asset catalogue.
 - Verified all 19 tests pass and the unsigned arm64 Debug build succeeds with the new paths.
 
+## Phase 6 — Reconcile login-item state & cull legacy assets  ✅ completed 2026-08-09
+
+- Made `SMAppService.status` authoritative and removed the obsolete persisted launch-at-login toggle value.
+- Added an observable controller that surfaces approval requirements and registration errors, refreshes after external System Settings changes, and links directly to Login Items settings.
+- Added six controller tests; the full suite now contains 25 passing tests.
+- Removed 20 unreferenced legacy image sets while retaining the app icon and all three runtime-referenced menu-bar assets.
+- Verified the pruned asset catalogue and unsigned arm64 Debug build succeed.
+
 ## Backlog
 
 Deliberately deferred, with context so future contributors know why each one is parked rather than forgotten.
@@ -59,7 +67,8 @@ Deliberately deferred, with context so future contributors know why each one is 
 - **SwiftUI rewrite of `ShortcutRecorderView`.** Blocked on macOS 14+ `KeyPress` modifier; the current `NSViewRepresentable` is the right call for macOS 13.
 - **Broader `StatusBarCoordinator` timing tests.** Activation-policy transitions are covered. Cooldown and auto-collapse timing still require injecting a `Clock` / test scheduler and replacing `Task.sleep` with `clock.sleep`.
 - **Continuous integration.** Add an arm64 macOS workflow that runs the shared scheme's build and test actions.
-- **Launch-at-login reconciliation.** Read `SMAppService.status`, reflect approval/failure states in settings, and avoid treating the persisted toggle as authoritative.
+- **Global shortcut hardening.** Validate captured combinations, provide clear conflict/invalid-state feedback, and improve keyboard and VoiceOver behaviour in the recorder.
+- **Accessibility and localisation pass.** Audit the complete preferences flow and status-bar controls, then translate every current SwiftUI string, including login-item status and approval guidance.
 - **`NSApp.activate(ignoringOtherApps:)` → `NSApp.activate()`.** The new API is macOS 14+. Swap when the target moves.
 - **Replace `openSettingsWindow:` private selector with `SettingsLink`.** Same macOS 14+ block; centralised in `NSApplication+Settings.swift` so the migration is one edit.
 - **App-wide DI container / service registry.** Not needed at current scale — `AppDelegate` is a clear composition root. Revisit if the service list grows past ~5.

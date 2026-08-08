@@ -35,6 +35,7 @@
 		DD00000100000002 /* GlobalKeybindPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000002 /* GlobalKeybindPreferencesTests.swift */; };
 		DD00000100000003 /* HotKeyServicingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000003 /* HotKeyServicingTests.swift */; };
 		DD00000100000004 /* StatusBarCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000004 /* StatusBarCoordinatorTests.swift */; };
+		EE00000100000001 /* LaunchAtLoginControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE00001100000001 /* LaunchAtLoginControllerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		DD00001100000003 /* HotKeyServicingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyServicingTests.swift; sourceTree = "<group>"; };
 		DD00001100000004 /* StatusBarCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarCoordinatorTests.swift; sourceTree = "<group>"; };
 		DD00001100000005 /* SpeakeasyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakeasyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE00001100000001 /* LaunchAtLoginControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginControllerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +242,7 @@
 				DD00001100000002 /* GlobalKeybindPreferencesTests.swift */,
 				DD00001100000003 /* HotKeyServicingTests.swift */,
 				DD00001100000004 /* StatusBarCoordinatorTests.swift */,
+				EE00001100000001 /* LaunchAtLoginControllerTests.swift */,
 			);
 			path = SpeakeasyTests;
 			sourceTree = "<group>";
@@ -395,6 +398,7 @@
 				DD00000100000002 /* GlobalKeybindPreferencesTests.swift in Sources */,
 				DD00000100000003 /* HotKeyServicingTests.swift in Sources */,
 				DD00000100000004 /* StatusBarCoordinatorTests.swift in Sources */,
+				EE00000100000001 /* LaunchAtLoginControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

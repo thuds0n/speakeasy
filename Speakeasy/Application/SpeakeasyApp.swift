@@ -6,7 +6,10 @@ struct SpeakeasyApp: App {
 
     var body: some Scene {
         Settings {
-            PreferencesView(settings: appDelegate.settings)
+            PreferencesView(
+                settings: appDelegate.settings,
+                launchAtLogin: appDelegate.launchAtLoginController
+            )
         }
     }
 }
