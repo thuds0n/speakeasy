@@ -15,10 +15,13 @@ final class SettingsStore: ObservableObject {
     private let userDefaults: UserDefaults
     private var cancellables = Set<AnyCancellable>()
 
-    init(userDefaults: UserDefaults = .standard) {
+    init(
+        userDefaults: UserDefaults = .standard,
+        persistentDomainName: String? = Bundle.main.bundleIdentifier
+    ) {
         self.userDefaults = userDefaults
 
-        Self.migrateLegacyKeys(in: userDefaults)
+        Self.migrateLegacyKeys(in: userDefaults, persistentDomainName: persistentDomainName)
 
         userDefaults.register(defaults: [
             UserDefaults.Key.isAutoStart: false,
@@ -44,8 +47,14 @@ final class SettingsStore: ObservableObject {
 
     /// Move values written under legacy keys to their current names. Runs once per launch;
     /// harmless no-op after the first run because the legacy key is removed.
-    private static func migrateLegacyKeys(in userDefaults: UserDefaults) {
-        if userDefaults.object(forKey: UserDefaults.Key.isShowPreference) == nil,
+    private static func migrateLegacyKeys(
+        in userDefaults: UserDefaults,
+        persistentDomainName: String?
+    ) {
+        let hasPersistedCurrentValue = persistentDomainName
+            .flatMap { userDefaults.persistentDomain(forName: $0) }?[UserDefaults.Key.isShowPreference] != nil
+
+        if !hasPersistedCurrentValue,
            let legacy = userDefaults.object(forKey: UserDefaults.Key.Legacy.isShowPreference) {
             userDefaults.set(legacy, forKey: UserDefaults.Key.isShowPreference)
         }

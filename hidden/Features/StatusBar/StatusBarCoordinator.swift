@@ -7,8 +7,9 @@ final class StatusBarCoordinator {
     // MARK: - Dependencies
 
     private let settings: SettingsStore
-    private let items = StatusBarItemManager()
-    private let collapseTimer = AutoCollapseTimer()
+    private let applicationActivation: ApplicationActivationControlling
+    private let items: StatusBarItemManager
+    private let collapseTimer: AutoCollapseTiming
     private var cancellables = Set<AnyCancellable>()
 
     // Debounce state for expand/collapse. A pending `Task` acts as the cooldown window;
@@ -17,8 +18,16 @@ final class StatusBarCoordinator {
 
     // MARK: - Init / deinit
 
-    init(settings: SettingsStore) {
+    init(
+        settings: SettingsStore,
+        applicationActivation: ApplicationActivationControlling,
+        collapseTimer: AutoCollapseTiming,
+        statusItemAutosaveNamePrefix: String = "speakeasy"
+    ) {
         self.settings = settings
+        self.applicationActivation = applicationActivation
+        self.collapseTimer = collapseTimer
+        self.items = StatusBarItemManager(autosaveNamePrefix: statusItemAutosaveNamePrefix)
 
         setupExpandCollapseButton()
         setupContextMenu()
@@ -32,15 +41,12 @@ final class StatusBarCoordinator {
         Task { [weak self] in
             try? await Task.sleep(for: .seconds(1))
             guard let self else { return }
-            self.items.collapse()
-            self.updateToggleButtonImage()
-            self.updateAutoCollapseScheduling()
+            self.collapse()
         }
     }
 
     deinit {
         toggleCooldown?.cancel()
-        collapseTimer.stop()
     }
 
     // MARK: - Setup
@@ -102,22 +108,14 @@ final class StatusBarCoordinator {
         items.collapse()
         updateToggleButtonImage()
         updateAutoCollapseScheduling()
-
-        if settings.useFullStatusBarOnExpandEnabled {
-            NSApp.setActivationPolicy(.accessory)
-            NSApp.deactivate()
-        }
+        updateApplicationActivation()
     }
 
     private func expand() {
         items.expand()
         updateToggleButtonImage()
         updateAutoCollapseScheduling()
-
-        if settings.useFullStatusBarOnExpandEnabled {
-            NSApp.setActivationPolicy(.regular)
-            NSApp.activate(ignoringOtherApps: true)
-        }
+        updateApplicationActivation()
     }
 
     private func updateToggleButtonImage() {
@@ -147,23 +145,45 @@ final class StatusBarCoordinator {
 
     // MARK: - Auto-collapse
 
-    private func updateAutoCollapseScheduling() {
+    private func updateAutoCollapseScheduling(
+        isAutoHide: Bool? = nil,
+        duration: TimeInterval? = nil
+    ) {
         collapseTimer.stop()
 
-        guard settings.isAutoHide, !items.isCollapsed else { return }
+        let shouldAutoHide = isAutoHide ?? settings.isAutoHide
+        guard shouldAutoHide, !items.isCollapsed else { return }
 
-        collapseTimer.start(interval: settings.autoHideDuration) { [weak self] in
+        collapseTimer.start(interval: duration ?? settings.autoHideDuration) { [weak self] in
             guard let self, self.settings.isAutoHide else { return }
             self.collapse()
-            self.updateToggleButtonImage()
         }
+    }
+
+    // MARK: - Application activation
+
+    static func activationMode(
+        useFullStatusBarOnExpandEnabled: Bool,
+        isCollapsed: Bool
+    ) -> ApplicationActivationMode {
+        useFullStatusBarOnExpandEnabled && !isCollapsed
+            ? .fullMenuBar
+            : .menuBarExtraOnly
+    }
+
+    private func updateApplicationActivation(useFullStatusBarOnExpandEnabled: Bool? = nil) {
+        applicationActivation.apply(Self.activationMode(
+            useFullStatusBarOnExpandEnabled: useFullStatusBarOnExpandEnabled
+                ?? settings.useFullStatusBarOnExpandEnabled,
+            isCollapsed: items.isCollapsed
+        ))
     }
 
     // MARK: - Context menu helpers
 
-    private func updateAutoCollapseMenuTitle() {
+    private func updateAutoCollapseMenuTitle(isAutoHide: Bool? = nil) {
         guard let item = items.separator.menu?.item(withTag: 1) else { return }
-        item.title = settings.isAutoHide
+        item.title = (isAutoHide ?? settings.isAutoHide)
             ? "Disable Auto Collapse".localized
             : "Enable Auto Collapse".localized
     }
@@ -182,17 +202,17 @@ final class StatusBarCoordinator {
         settings.$isAutoHide
             .dropFirst()
             .removeDuplicates()
-            .sink { [weak self] _ in
-                self?.updateAutoCollapseMenuTitle()
-                self?.updateAutoCollapseScheduling()
+            .sink { [weak self] isAutoHide in
+                self?.updateAutoCollapseMenuTitle(isAutoHide: isAutoHide)
+                self?.updateAutoCollapseScheduling(isAutoHide: isAutoHide)
             }
             .store(in: &cancellables)
 
         settings.$autoHideDuration
             .dropFirst()
             .removeDuplicates()
-            .sink { [weak self] _ in
-                self?.updateAutoCollapseScheduling()
+            .sink { [weak self] duration in
+                self?.updateAutoCollapseScheduling(duration: duration)
             }
             .store(in: &cancellables)
 
@@ -209,6 +229,14 @@ final class StatusBarCoordinator {
             .removeDuplicates()
             .sink { [weak self] isHidden in
                 self?.applySeparatorVisibility(hidden: isHidden, expandIfCollapsed: true)
+            }
+            .store(in: &cancellables)
+
+        settings.$useFullStatusBarOnExpandEnabled
+            .dropFirst()
+            .removeDuplicates()
+            .sink { [weak self] isEnabled in
+                self?.updateApplicationActivation(useFullStatusBarOnExpandEnabled: isEnabled)
             }
             .store(in: &cancellables)
     }

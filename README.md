@@ -31,12 +31,12 @@ macOS 13 Ventura or later · Apple Silicon or Intel
 Clone and build in Xcode:
 
 ```
-git clone https://github.com/your-username/speakeasy.git
+git clone https://github.com/thuds0n/speakeasy.git
 cd speakeasy
-open "Hidden Bar.xcodeproj"
+open "Speakeasy.xcodeproj"
 ```
 
-Build and run the **Hidden Bar** scheme. The app lives in your menu bar — no dock icon.
+Build and run the **Speakeasy** scheme. The app lives in your menu bar — no dock icon.
 
 ---
 

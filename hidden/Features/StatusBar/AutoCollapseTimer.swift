@@ -1,6 +1,13 @@
 import Foundation
 
-final class AutoCollapseTimer {
+@MainActor
+protocol AutoCollapseTiming: AnyObject {
+    func start(interval: TimeInterval, action: @escaping () -> Void)
+    func stop()
+}
+
+@MainActor
+final class AutoCollapseTimer: AutoCollapseTiming {
     private var timer: Timer?
 
     func start(interval: TimeInterval, action: @escaping () -> Void) {

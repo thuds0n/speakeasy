@@ -30,6 +30,7 @@ final class StatusBarItemManager {
     // MARK: - State
 
     private let separatorImage = NSImage(named: NSImage.Name("ic_line"))
+    private let autosaveNamePrefix: String
     private(set) var collapseLength: CGFloat = Lengths.collapsedMax
 
     var isCollapsed: Bool {
@@ -38,11 +39,20 @@ final class StatusBarItemManager {
 
     // MARK: - Init
 
-    init() {
+    init(autosaveNamePrefix: String = "speakeasy") {
+        self.autosaveNamePrefix = autosaveNamePrefix
         refreshCollapseLength()
-        separator.autosaveName = "speakeasy_separate"
-        expandCollapse.autosaveName = "speakeasy_expandcollapse"
+        separator.autosaveName = "\(autosaveNamePrefix)_separate"
+        expandCollapse.autosaveName = "\(autosaveNamePrefix)_expandcollapse"
         separator.button?.image = separatorImage
+    }
+
+    deinit {
+        NSStatusBar.system.removeStatusItem(expandCollapse)
+        NSStatusBar.system.removeStatusItem(separator)
+        if let alwaysHidden {
+            NSStatusBar.system.removeStatusItem(alwaysHidden)
+        }
     }
 
     // MARK: - Collapse / expand
@@ -78,7 +88,7 @@ final class StatusBarItemManager {
         }
         refreshCollapseLength()
         let item = NSStatusBar.system.statusItem(withLength: Lengths.visible)
-        item.autosaveName = "speakeasy_alwayshidden"
+        item.autosaveName = "\(autosaveNamePrefix)_alwayshidden"
         item.button?.image = separatorImage
         item.button?.appearsDisabled = true
         alwaysHidden = item

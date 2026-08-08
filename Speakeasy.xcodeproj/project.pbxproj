@@ -30,7 +30,22 @@
 		967F4B2824169CAF00F18D3C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 967F4B2A24169CAF00F18D3C /* Localizable.strings */; };
 		BB00000100000010 /* NSApplication+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001100000010 /* NSApplication+Settings.swift */; };
 		BB00000100000011 /* GlobalKeybindPreferences+NSEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB00001100000011 /* GlobalKeybindPreferences+NSEvent.swift */; };
+		CC00000100000001 /* ApplicationActivationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC00001100000001 /* ApplicationActivationService.swift */; };
+		DD00000100000001 /* SettingsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000001 /* SettingsStoreTests.swift */; };
+		DD00000100000002 /* GlobalKeybindPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000002 /* GlobalKeybindPreferencesTests.swift */; };
+		DD00000100000003 /* HotKeyServicingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000003 /* HotKeyServicingTests.swift */; };
+		DD00000100000004 /* StatusBarCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD00001100000004 /* StatusBarCoordinatorTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DD00006100000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 929113E921F9D04100173149 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 929113F021F9D04100173149;
+			remoteInfo = Speakeasy;
+		};
+/* End PBXContainerItemProxy section */
 
 /* End PBXCopyFilesBuildPhase section */
 
@@ -45,8 +60,8 @@
 		55D9B6B72660F153007AF073 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55D9B6BA2661DEDA007AF073 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55D9B6BD2661DEE8007AF073 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9220587D22127050008A8B03 /* Hidden.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Hidden.entitlements; path = Hidden/Hidden.entitlements; sourceTree = "<group>"; };
-		929113F121F9D04100173149 /* Hidden Bar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hidden Bar.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9220587D22127050008A8B03 /* Speakeasy.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Speakeasy.entitlements; path = hidden/Speakeasy.entitlements; sourceTree = "<group>"; };
+		929113F121F9D04100173149 /* Speakeasy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Speakeasy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		929113F421F9D04100173149 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		929113F821F9D04200173149 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		929113FD21F9D04200173149 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -68,6 +83,12 @@
 		BB00001100000006 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
 		BB00001100000010 /* NSApplication+Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSApplication+Settings.swift"; sourceTree = "<group>"; };
 		BB00001100000011 /* GlobalKeybindPreferences+NSEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GlobalKeybindPreferences+NSEvent.swift"; sourceTree = "<group>"; };
+		CC00001100000001 /* ApplicationActivationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationActivationService.swift; sourceTree = "<group>"; };
+		DD00001100000001 /* SettingsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStoreTests.swift; sourceTree = "<group>"; };
+		DD00001100000002 /* GlobalKeybindPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferencesTests.swift; sourceTree = "<group>"; };
+		DD00001100000003 /* HotKeyServicingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyServicingTests.swift; sourceTree = "<group>"; };
+		DD00001100000004 /* StatusBarCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarCoordinatorTests.swift; sourceTree = "<group>"; };
+		DD00001100000005 /* SpeakeasyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpeakeasyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +97,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				08A5F85F23AA01EE00981CA5 /* HotKey in Frameworks */,
-				92C5058121FEC2590084719A /* Cocoa.framework in Frameworks */,
-				92C5057F21FEC24C0084719A /* ServiceManagement.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD00004200000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +165,7 @@
 		08C20FDC23AABC440035D978 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CC00001100000001 /* ApplicationActivationService.swift */,
 				08A5F86023AA085B00981CA5 /* LaunchAtLoginService.swift */,
 				92C97B87220032ED0007559C /* HotKeyService.swift */,
 			);
@@ -166,22 +193,23 @@
 		929113E821F9D04100173149 = {
 			isa = PBXGroup;
 			children = (
-				9220587D22127050008A8B03 /* Hidden.entitlements */,
-				929113F321F9D04100173149 /* hidden */,
+				9220587D22127050008A8B03 /* Speakeasy.entitlements */,
+				929113F321F9D04100173149 /* Speakeasy */,
+				DD00002100000001 /* SpeakeasyTests */,
 				929113F221F9D04100173149 /* Products */,
-				92C5057D21FEC24C0084719A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		929113F221F9D04100173149 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				929113F121F9D04100173149 /* Hidden Bar.app */,
+				929113F121F9D04100173149 /* Speakeasy.app */,
+				DD00001100000005 /* SpeakeasyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		929113F321F9D04100173149 /* hidden */ = {
+		929113F321F9D04100173149 /* Speakeasy */ = {
 			isa = PBXGroup;
 			children = (
 				92C97B89220049B30007559C /* Application */,
@@ -192,16 +220,8 @@
 				929113FD21F9D04200173149 /* Info.plist */,
 				967F4B2A24169CAF00F18D3C /* Localizable.strings */,
 			);
+			name = Speakeasy;
 			path = hidden;
-			sourceTree = "<group>";
-		};
-		92C5057D21FEC24C0084719A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				92C5058021FEC2590084719A /* Cocoa.framework */,
-				92C5057E21FEC24C0084719A /* ServiceManagement.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		92C97B89220049B30007559C /* Application */ = {
@@ -213,12 +233,23 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		DD00002100000001 /* SpeakeasyTests */ = {
+			isa = PBXGroup;
+			children = (
+				DD00001100000001 /* SettingsStoreTests.swift */,
+				DD00001100000002 /* GlobalKeybindPreferencesTests.swift */,
+				DD00001100000003 /* HotKeyServicingTests.swift */,
+				DD00001100000004 /* StatusBarCoordinatorTests.swift */,
+			);
+			path = SpeakeasyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		929113F021F9D04100173149 /* Hidden Bar */ = {
+		929113F021F9D04100173149 /* Speakeasy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9291141721F9D04200173149 /* Build configuration list for PBXNativeTarget "Hidden Bar" */;
+			buildConfigurationList = 9291141721F9D04200173149 /* Build configuration list for PBXNativeTarget "Speakeasy" */;
 			buildPhases = (
 				929113ED21F9D04100173149 /* Sources */,
 				929113EE21F9D04100173149 /* Frameworks */,
@@ -228,13 +259,31 @@
 			);
 			dependencies = (
 			);
-			name = "Hidden Bar";
+			name = Speakeasy;
 			packageProductDependencies = (
 				08A5F85E23AA01EE00981CA5 /* HotKey */,
 			);
-			productName = vanillaClone;
-			productReference = 929113F121F9D04100173149 /* Hidden Bar.app */;
+			productName = Speakeasy;
+			productReference = 929113F121F9D04100173149 /* Speakeasy.app */;
 			productType = "com.apple.product-type.application";
+		};
+		DD00003100000001 /* SpeakeasyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DD00005100000001 /* Build configuration list for PBXNativeTarget "SpeakeasyTests" */;
+			buildPhases = (
+				DD00004100000001 /* Sources */,
+				DD00004200000001 /* Frameworks */,
+				DD00004300000001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DD00006200000001 /* PBXTargetDependency */,
+			);
+			name = SpeakeasyTests;
+			productName = SpeakeasyTests;
+			productReference = DD00001100000005 /* SpeakeasyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -244,7 +293,6 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = "Dwarves Foundation";
 				TargetAttributes = {
 					929113F021F9D04100173149 = {
 						CreatedOnToolsVersion = 10.1;
@@ -255,9 +303,13 @@
 							};
 						};
 					};
+					DD00003100000001 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 929113F021F9D04100173149;
+					};
 				};
 			};
-			buildConfigurationList = 929113EC21F9D04100173149 /* Build configuration list for PBXProject "Hidden Bar" */;
+			buildConfigurationList = 929113EC21F9D04100173149 /* Build configuration list for PBXProject "Speakeasy" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -281,7 +333,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				929113F021F9D04100173149 /* Hidden Bar */,
+				929113F021F9D04100173149 /* Speakeasy */,
+				DD00003100000001 /* SpeakeasyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -296,6 +349,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD00004300000001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -303,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC00000100000001 /* ApplicationActivationService.swift in Sources */,
 				08C20FE023AB44E60035D978 /* Bundle+Extension.swift in Sources */,
 				08A5F85C23AA013100981CA5 /* SettingsStore.swift in Sources */,
 				08A5F86123AA085B00981CA5 /* LaunchAtLoginService.swift in Sources */,
@@ -326,7 +387,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD00004100000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DD00000100000001 /* SettingsStoreTests.swift in Sources */,
+				DD00000100000002 /* GlobalKeybindPreferencesTests.swift in Sources */,
+				DD00000100000003 /* HotKeyServicingTests.swift in Sources */,
+				DD00000100000004 /* StatusBarCoordinatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DD00006200000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 929113F021F9D04100173149 /* Speakeasy */;
+			targetProxy = DD00006100000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		967F4B2A24169CAF00F18D3C /* Localizable.strings */ = {
@@ -469,7 +549,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Hidden/Hidden.entitlements;
+				CODE_SIGN_ENTITLEMENTS = hidden/Speakeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -493,7 +573,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Hidden/Hidden.entitlements;
+				CODE_SIGN_ENTITLEMENTS = hidden/Speakeasy.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -513,10 +593,38 @@
 			};
 			name = Release;
 		};
+		DD00005200000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.speakeasy.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Speakeasy.app/Contents/MacOS/Speakeasy";
+			};
+			name = Debug;
+		};
+		DD00005300000001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.speakeasy.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Speakeasy.app/Contents/MacOS/Speakeasy";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		929113EC21F9D04100173149 /* Build configuration list for PBXProject "Hidden Bar" */ = {
+		929113EC21F9D04100173149 /* Build configuration list for PBXProject "Speakeasy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9291141521F9D04200173149 /* Debug */,
@@ -525,11 +633,20 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9291141721F9D04200173149 /* Build configuration list for PBXNativeTarget "Hidden Bar" */ = {
+		9291141721F9D04200173149 /* Build configuration list for PBXNativeTarget "Speakeasy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9291141821F9D04200173149 /* Debug */,
 				9291141921F9D04200173149 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DD00005100000001 /* Build configuration list for PBXNativeTarget "SpeakeasyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DD00005200000001 /* Debug */,
+				DD00005300000001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

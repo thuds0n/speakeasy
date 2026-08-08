@@ -1,5 +1,5 @@
 import XCTest
-@testable import Hidden_Bar
+@testable import Speakeasy
 
 /// Verifies that the `HotKeyServicing` protocol abstracts the hotkey callback flow so tests and
 /// callers can substitute a fake. Does not exercise the real Carbon hotkey registration, which is

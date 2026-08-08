@@ -15,9 +15,23 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "929113F021F9D04100173149"
-               BuildableName = "Hidden Bar.app"
-               BlueprintName = "Hidden Bar"
-               ReferencedContainer = "container:Hidden Bar.xcodeproj">
+               BuildableName = "Speakeasy.app"
+               BlueprintName = "Speakeasy"
+               ReferencedContainer = "container:Speakeasy.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD00003100000001"
+               BuildableName = "SpeakeasyTests.xctest"
+               BlueprintName = "SpeakeasyTests"
+               ReferencedContainer = "container:Speakeasy.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,6 +42,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "DD00003100000001"
+               BuildableName = "SpeakeasyTests.xctest"
+               BlueprintName = "SpeakeasyTests"
+               ReferencedContainer = "container:Speakeasy.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -45,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "929113F021F9D04100173149"
-            BuildableName = "Hidden Bar.app"
-            BlueprintName = "Hidden Bar"
-            ReferencedContainer = "container:Hidden Bar.xcodeproj">
+            BuildableName = "Speakeasy.app"
+            BlueprintName = "Speakeasy"
+            ReferencedContainer = "container:Speakeasy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "929113F021F9D04100173149"
-            BuildableName = "Hidden Bar.app"
-            BlueprintName = "Hidden Bar"
-            ReferencedContainer = "container:Hidden Bar.xcodeproj">
+            BuildableName = "Speakeasy.app"
+            BlueprintName = "Speakeasy"
+            ReferencedContainer = "container:Speakeasy.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

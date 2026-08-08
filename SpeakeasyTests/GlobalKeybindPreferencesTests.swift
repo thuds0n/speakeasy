@@ -1,5 +1,5 @@
 import XCTest
-@testable import Hidden_Bar
+@testable import Speakeasy
 
 final class GlobalKeybindPreferencesTests: XCTestCase {
 

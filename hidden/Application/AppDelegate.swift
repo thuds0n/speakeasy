@@ -7,11 +7,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private let hotKeyService: HotKeyServicing = HotKeyService()
     private let launchAtLoginService: LaunchAtLoginControlling = LaunchAtLoginService()
+    private let applicationActivationService: ApplicationActivationControlling = ApplicationActivationService()
+    private let autoCollapseTimer: AutoCollapseTiming = AutoCollapseTimer()
     private var statusBarCoordinator: StatusBarCoordinator?
     private var cancellables = Set<AnyCancellable>()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        statusBarCoordinator = StatusBarCoordinator(settings: settings)
+        statusBarCoordinator = StatusBarCoordinator(
+            settings: settings,
+            applicationActivation: applicationActivationService,
+            collapseTimer: autoCollapseTimer
+        )
         hotKeyService.onKeyDown = { [weak self] in
             self?.statusBarCoordinator?.expandCollapseIfNeeded()
         }

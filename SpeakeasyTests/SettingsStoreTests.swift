@@ -1,26 +1,27 @@
 import XCTest
-@testable import Hidden_Bar
+@testable import Speakeasy
 
 @MainActor
 final class SettingsStoreTests: XCTestCase {
 
     private var defaults: UserDefaults!
-    private let suiteName = "SpeakeasyTests.SettingsStoreTests"
+    private var suiteName: String!
 
     override func setUp() async throws {
         try await super.setUp()
-        UserDefaults().removePersistentDomain(forName: suiteName)
+        suiteName = "SpeakeasyTests.SettingsStoreTests.\(UUID().uuidString)"
         defaults = UserDefaults(suiteName: suiteName)
     }
 
     override func tearDown() async throws {
         defaults.removePersistentDomain(forName: suiteName)
         defaults = nil
+        suiteName = nil
         try await super.tearDown()
     }
 
     func testDefaultValuesAreRegisteredOnFirstLaunch() {
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
 
         XCTAssertFalse(store.isAutoStart)
         XCTAssertTrue(store.isShowPreference)
@@ -33,7 +34,7 @@ final class SettingsStoreTests: XCTestCase {
     }
 
     func testMutatingPublishedValuePersistsToUserDefaults() {
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
 
         store.isAutoHide = false
         store.autoHideDuration = 30
@@ -46,18 +47,18 @@ final class SettingsStoreTests: XCTestCase {
 
     func testRelaunchRestoresPreviouslyPersistedValues() {
         do {
-            let store = SettingsStore(userDefaults: defaults)
+            let store = makeStore()
             store.isAutoStart = true
             store.autoHideDuration = 60
         }
 
-        let relaunch = SettingsStore(userDefaults: defaults)
+        let relaunch = makeStore()
         XCTAssertTrue(relaunch.isAutoStart)
         XCTAssertEqual(relaunch.autoHideDuration, 60)
     }
 
     func testGlobalKeyRoundTripsThroughCodable() {
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
         let shortcut = GlobalKeybindPreferences(
             function: false, control: false, command: true, shift: true, option: false, capsLock: false,
             carbonFlags: 0, characters: "h", keyCode: 4
@@ -65,12 +66,12 @@ final class SettingsStoreTests: XCTestCase {
 
         store.globalKey = shortcut
 
-        let relaunch = SettingsStore(userDefaults: defaults)
+        let relaunch = makeStore()
         XCTAssertEqual(relaunch.globalKey, shortcut)
     }
 
     func testClearingGlobalKeyRemovesItFromDefaults() {
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
         store.globalKey = GlobalKeybindPreferences(
             function: false, control: false, command: true, shift: false, option: false, capsLock: false,
             carbonFlags: 0, characters: "k", keyCode: 40
@@ -83,7 +84,7 @@ final class SettingsStoreTests: XCTestCase {
     func testLegacyIsShowPreferencesKeyMigratesOnLaunch() {
         defaults.set(false, forKey: UserDefaults.Key.Legacy.isShowPreference)
 
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
 
         XCTAssertFalse(store.isShowPreference)
         XCTAssertNil(defaults.object(forKey: UserDefaults.Key.Legacy.isShowPreference))
@@ -94,8 +95,12 @@ final class SettingsStoreTests: XCTestCase {
         defaults.set(false, forKey: UserDefaults.Key.Legacy.isShowPreference)
         defaults.set(true, forKey: UserDefaults.Key.isShowPreference)
 
-        let store = SettingsStore(userDefaults: defaults)
+        let store = makeStore()
 
         XCTAssertTrue(store.isShowPreference)
+    }
+
+    private func makeStore() -> SettingsStore {
+        SettingsStore(userDefaults: defaults, persistentDomainName: suiteName)
     }
 }
